@@ -39,27 +39,27 @@ public class MovieSystem {
      */
     static {
         Customer c = new Customer();
-        c.setLoginName("zyf888");
+        c.setLoginName("c1");
         c.setPassWord("123456");
-        c.setUserName("P-1");
+        c.setUserName("C-1");
         c.setGender('M');
         c.setMoney(10000);
         c.setPhone("110110");
         ALL_USERS.add(c);
 
         Customer c1 = new Customer();
-        c1.setLoginName("gzl888");
+        c1.setLoginName("c2");
         c1.setPassWord("123456");
-        c1.setUserName("P-2");
+        c1.setUserName("C-2");
         c1.setGender('F');
         c1.setMoney(2000);
         c1.setPhone("111111");
         ALL_USERS.add(c1);
 
         Business b = new Business();
-        b.setLoginName("baozugong888");
+        b.setLoginName("b1");
         b.setPassWord("123456");
-        b.setUserName("P-3");
+        b.setUserName("B-3");
         b.setMoney(0);
         b.setGender('M');
         b.setPhone("110110");
@@ -71,9 +71,9 @@ public class MovieSystem {
         ALL_MOVIES.put(b, movies); // b = []
 
         Business b2 = new Business();
-        b2.setLoginName("baozupo888");
+        b2.setLoginName("b2");
         b2.setPassWord("123456");
-        b2.setUserName("P-4");
+        b2.setUserName("B-2");
         b2.setMoney(0);
         b2.setGender('F');
         b2.setPhone("110110");
@@ -157,7 +157,7 @@ public class MovieSystem {
     private static void showBusinessMain() {
         while (true) {
             System.out.println("============Merchant===================");
-            System.out.println(loginUser.getUserName() + (loginUser.getGender()=='M'? "Mr.":"Mrs" + " Welcome!"));
+            System.out.println(loginUser.getUserName() + (loginUser.getGender()=='M'? " Mr.":" Mrs" + " Welcome! "));
             System.out.println("1、Show details:");
             System.out.println("2、On line:");
             System.out.println("3、Off line:");
@@ -196,7 +196,7 @@ public class MovieSystem {
     private static void showCustomerMAin() {
         while (true) {
             System.out.println("============Customer===================");
-            System.out.println(loginUser.getUserName() + (loginUser.getGender()=='M'? "Mr.":"Mrs" + " Welcome!" +
+            System.out.println(loginUser.getUserName() + (loginUser.getGender()=='M'? " Mr.":" Mrs" + " Welcome! " +
                     "\tBalance: $" + loginUser.getMoney()));
             System.out.println("Please select the function you want to operate:");
             System.out.println("1、Display all video information:");
