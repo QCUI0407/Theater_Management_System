@@ -12,7 +12,7 @@ public class Movie {
     private Date startTime;//放映时间
 
     
-    public Movie() {
+    public Movie(String name2, String actor2, Double double1, Double double2, Integer integer, Date date) {
     }
     
     public Movie(String name, String actor, double score, double time, double price, int number, Date startTime) {
