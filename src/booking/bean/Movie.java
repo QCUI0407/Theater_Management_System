@@ -11,14 +11,12 @@ public class Movie {
     private int number;//余票
     private Date startTime;//放映时间
 
-    
-    public Movie(String name2, String actor2, Double double1, Double double2, Integer integer, Date date) {
+    public Movie() {
     }
-    
-    public Movie(String name, String actor, double score, double time, double price, int number, Date startTime) {
+   
+    public Movie(String name, String actor, double time, double price, int number, Date startTime) {
         this.name = name;
         this.actor = actor;
-        this.score = score;
         this.time = time;
         this.price = price;
         this.number = number;

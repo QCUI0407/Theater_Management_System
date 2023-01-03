@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import booking.bean.Business;
 import booking.bean.Customer;
 import booking.bean.Movie;
 import booking.bean.User;
-import ch.qos.logback.classic.Logger;
 
 public class MovieSystem {
 
