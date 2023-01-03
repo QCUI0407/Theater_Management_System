@@ -65,5 +65,8 @@ public class Movie {
         this.startTime = startTime;
     }
 
+    public void setTime(String time2) {
+    }
+
 
 }

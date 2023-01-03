@@ -187,14 +187,14 @@ public class MovieSystem {
                     break;
                 case "3":
                     // 下架电影信息
-                    // deleteMovie();
+                    deleteMovie();
                     break;
                 case "4":
                     // 修改电影信息
-                    // updateMovie();
+                    updateMovie();
                     break;
                 case "5":
-                    System.out.println(loginUser.getUserName() + "Bye-Bye!!");
+                    System.out.println(loginUser.getUserName() + " Bye-Bye!!");
                     return; // 干掉方法
                 default:
                     System.out.println("Erro command!");
@@ -204,30 +204,155 @@ public class MovieSystem {
     }
 
     /*
+     * 影片修改功能
+     */
+    private static void updateMovie() {
+        System.out.println("================Edit Movie====================");
+
+        Business business = (Business) loginUser;
+        List<Movie> movies = ALL_MOVIES.get(business);
+        if (movies.size() == 0) {
+            System.out.println("No movie can edit now");
+            return;
+        }
+        // 2.让用户选择需要修改的电影
+        while (true) {
+            System.out.println("Enter the movie title need to Edit.");
+            String movieName = SYS_SC.nextLine();
+
+            // 3.查看电影对象是否存在
+            Movie movie = getMovieByName(movieName);
+            if (movie != null) {
+                // 修改
+                System.out.println("Please enter a new title: ");
+                String name = SYS_SC.nextLine();
+                System.out.println("Please enter the updata actor:");
+                String actor = SYS_SC.nextLine();
+                System.out.println("Please enter the updata duration:");
+                String time = SYS_SC.nextLine();
+                System.out.println("Please enter your updata fare:");
+                String price = SYS_SC.nextLine();
+                System.out.println("Please enter updata number of tickets:");
+                String totalNumber = SYS_SC.nextLine(); // 200\n
+                while (true) {
+                    try {
+                        System.out.println("Please enter the updata showtime:");
+                        String stime = SYS_SC.nextLine();
+                        movie.setName(name);
+                        movie.setActor(actor);
+                        movie.setPrice(Double.valueOf(price));
+                        movie.setTime(time);
+                        movie.setNumber(Integer.valueOf(totalNumber));
+                        movie.setStartTime(sdf.parse(stime));
+                        System.out.println("Movie has been edited.");
+                        showBusinessInfos();
+                        return; // 直接退出去
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        LOGGER.error("time erro!");
+                    }
+                }
+            } else {
+                System.out.println("Can not find this movie in the list.");
+                System.out.println("Keep edit orther moives?[y/n]");
+                String command = SYS_SC.nextLine();
+                switch (command) {
+                    case "y":
+                        break;
+
+                    default:
+                        System.out.println("Bye from edit function.");
+                        return;
+                }
+            }
+        }
+    }
+
+    /**
+     * 影片下架功能
+     */
+    private static void deleteMovie() {
+        System.out.println("================Off-line Movie====================");
+
+        Business business = (Business) loginUser;
+        List<Movie> movies = ALL_MOVIES.get(business);
+        if (movies.size() == 0) {
+            System.out.println("No movie online now");
+            return;
+        }
+
+        // 2.让用户选择需要下架的电影
+        while (true) {
+            System.out.println("Enter the movie title need to off-line.");
+            String movieName = SYS_SC.nextLine();
+
+            // 3.查看电影对象是否存在
+            Movie movie = getMovieByName(movieName);
+            if (movie != null) {
+                // 下架
+                movies.remove(movie);
+                System.out.println(movie.getName() + " has been removed.");
+                return;
+            } else {
+                System.out.println("Can not find this movie in the list.");
+                System.out.println("Keep off-line orther moives?[y/n]");
+                String command = SYS_SC.nextLine();
+                switch (command) {
+                    case "y":
+                        break;
+
+                    default:
+                        System.out.println("Bye from off-line function.");
+                        return;
+                }
+            }
+        }
+    }
+
+    /**
+     * 查询当前的排片
+     * 
+     * @param movieName
+     * @return
+     */
+    public static Movie getMovieByName(String movieName) {
+        Business business = (Business) loginUser;
+        List<Movie> movies = ALL_MOVIES.get(business);
+        for (Movie movie : movies) {
+            if (movie.getName().contains(movieName)) {
+                return movie;
+            }
+        }
+        return null;
+    }
+
+    /*
      * 商家进行影片上架
      */
     private static void addMovie() {
         System.out.println("================Online Movie====================");
-        // 根据商家对象(就是登录的用户loginUser)，作为Map集合的键 提取对应的值就是其排片信息 ：Map<Business , List<Movie>> ALL_MOVIES
+        // 根据商家对象(就是登录的用户loginUser)，作为Map集合的键 提取对应的值就是其排片信息 ：Map<Business , List<Movie>>
+        // ALL_MOVIES
         Business business = (Business) loginUser;
         List<Movie> movies = ALL_MOVIES.get(business);
-        System.out.println("Please enter a new title: ");
-        String name  = SYS_SC.nextLine();
+        System.out.println("Please enter a title: ");
+        String name = SYS_SC.nextLine();
         System.out.println("Please enter the actor:");
-        String actor  = SYS_SC.nextLine();
+        String actor = SYS_SC.nextLine();
         System.out.println("Please enter the duration:");
-        String time  = SYS_SC.nextLine();
+        String time = SYS_SC.nextLine();
         System.out.println("Please enter your fare:");
-        String price  = SYS_SC.nextLine();
+        String price = SYS_SC.nextLine();
         System.out.println("Please enter the number of tickets:");
-        String totalNumber  = SYS_SC.nextLine(); // 200\n
+        String totalNumber = SYS_SC.nextLine(); // 200\n
         while (true) {
             try {
                 System.out.println("Please enter the showtime:");
-                String stime  = SYS_SC.nextLine();
-            // public Movie(String name, String actor, double time, double price, int number, Date startTime)        // 封装成电影对象 ，加入集合movices中去
-                Movie movie = new Movie(name, actor ,Double.valueOf(time) , Double.valueOf(price)
-                        , Integer.valueOf(totalNumber), sdf.parse(stime));
+                String stime = SYS_SC.nextLine();
+                // public Movie(String name, String actor, double time, double price, int
+                // number, Date startTime) // 封装成电影对象 ，加入集合movices中去
+                Movie movie = new Movie(name, actor, Double.valueOf(time), Double.valueOf(price),
+                        Integer.valueOf(totalNumber), sdf.parse(stime));
                 movies.add(movie);
                 System.out.println("You have successfully listed:<" + movie.getName() + ">");
                 return; // 直接退出去
@@ -241,7 +366,7 @@ public class MovieSystem {
     // 展示当前商家信息
     private static void showBusinessInfos() {
         System.out.println("================Merchant Detial=================");
-        LOGGER.info(loginUser.getUserName() +"Merchant,checking thire account....");
+        LOGGER.info(loginUser.getUserName() + "Merchant,checking thire account....");
         // 根据商家对象(loginUser)，作为Map集合的键 提取对应的值就是其排片信息： Map<Business, List<Movie>>
         // ALL_MOVIES
         /*
@@ -260,7 +385,8 @@ public class MovieSystem {
                 business.getShopName() + "\t\tPhone: " + business.getPhone() + "\t\tAddress: " + business.getAddress());
         List<Movie> movies = ALL_MOVIES.get(business);
         if (movies.size() > 0) {
-            System.out.println("Title\t\t\tStarring\t\tDuration\t\tScore\t\tFare\t\tNumber of Remaining Tickets\t\tShowtime");
+            System.out.println(
+                    "Title\t\t\tactor\t\tDuration\t\tStarting\t\tFare\t\tNumber of Remaining Tickets\t\tShowtime\t\tScore");
             for (Movie movie : movies) {
 
                 System.out.println(movie.getName() + "\t\t" + movie.getActor() + "\t\t" + movie.getTime()
