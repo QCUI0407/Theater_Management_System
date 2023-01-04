@@ -40,6 +40,5 @@
     <root level="ALL">
         <!-- 注意： 如果这里不配置关联打印位置， 该位置不会记录日志 -->
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE" />
     </root>
 </configuration>
